@@ -3,6 +3,7 @@ if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" OR ${CMAKE_CXX_COMPILER_ID} STREQUAL
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wsign-compare -pedantic -Werror")
 endif(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
 
+include(CheckCXXCompilerFlag)
 check_cxx_compiler_flag("-Wno-ignored-optimization-argument" HAS_WNO_IGNORED_OPT_ARGUMENT)
 if(${HAS_WNO_IGNORED_OPT_ARGUMENT})
     target_compile_options(ozo_tests PRIVATE "-Wno-ignored-optimization-argument")
