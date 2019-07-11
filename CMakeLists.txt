@@ -36,8 +36,6 @@ target_include_directories(ozo INTERFACE
 target_compile_definitions(ozo INTERFACE -DBOOST_COROUTINES_NO_DEPRECATION_WARNING)
 target_compile_definitions(ozo INTERFACE -DBOOST_HANA_CONFIG_ENABLE_STRING_UDL)
 
-target_compile_options(ozo INTERFACE -Wgnu-string-literal-operator-template)
-
 target_link_libraries(ozo INTERFACE Boost::coroutine)
 target_link_libraries(ozo INTERFACE PostgreSQL::PostgreSQL)
 

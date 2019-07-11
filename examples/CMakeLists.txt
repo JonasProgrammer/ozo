@@ -3,12 +3,20 @@ if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" OR ${CMAKE_CXX_COMPILER_ID} STREQUAL
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wsign-compare -pedantic -Werror")
 endif(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
 
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    # but these options are clang-specific
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-ignored-optimization-argument")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-gnu-string-literal-operator-template")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-gnu-zero-variadic-macro-arguments")
-endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+check_cxx_compiler_flag("-Wno-ignored-optimization-argument" HAS_WNO_IGNORED_OPT_ARGUMENT)
+if(${HAS_WNO_IGNORED_OPT_ARGUMENT})
+    target_compile_options(ozo_tests PRIVATE "-Wno-ignored-optimization-argument")
+endif()
+
+check_cxx_compiler_flag("-Wno-gnu-string-literal-operator-template" HAS_WNO_GNU_LITERAL)
+if(${HAS_NO_GNU_LITERAL})
+    target_compile_options(ozo_tests PRIVATE "-Wno-gnu-string-literal-operator-template")
+endif()
+
+check_cxx_compiler_flag("-Wno-gnu-zero-variadic-macro-arguments" HAS_WNO_GNU_ZERO_VARIADIC)
+if(${HAS_WNO_GNU_ZERO_VARIADIC})
+    target_compile_options(ozo_tests PRIVATE "-Wno-gnu-zero-variadic-macro-arguments")
+endif()
 
 find_program(CCACHE_FOUND ccache)
 
